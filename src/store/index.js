@@ -55,13 +55,14 @@ export default new Vuex.Store({
     persistState(
       (state) => state,
       ({
-        selectedCurrency, address, balance, tokenInfo, tokenBalances, cookiesConsent,
+        selectedCurrency, address, balance, tokenInfo, tokenBalances, tokenPrices, cookiesConsent,
       }) => ({
         selectedCurrency,
         address,
         balance,
         tokenInfo,
         tokenBalances,
+        tokenPrices,
         cookiesConsent,
       }),
     ),
