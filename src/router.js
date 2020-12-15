@@ -5,6 +5,7 @@ import Conference from './views/Conference.vue';
 import CreateProfile from './views/CreateProfile.vue';
 import FAQ from './views/FAQ.vue';
 import Governance from './views/Governance.vue';
+import Landing from './views/Landing.vue';
 import League from './views/League.vue';
 import Maintenance from './views/Maintenance.vue';
 import Mission from './views/Mission.vue';
@@ -23,6 +24,15 @@ import WordDetail from './views/WordDetail.vue';
 const routes = [
   {
     path: '/',
+    name: 'landing',
+    component: Landing,
+    meta: {
+      fullScreen: true,
+      layoutClass: 'landing-page',
+    },
+  },
+  {
+    path: '/feed',
     name: 'feed',
     component: FeedList,
     meta: { title: 'Feed' },
