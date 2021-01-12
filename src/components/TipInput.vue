@@ -1,5 +1,6 @@
 <template>
   <div class="tip-input">
+    <IconTipRebranded :class="{ tipped: tipUrlStats.isTipped, user: userAddress }" />
     <Component
       :is="useSdkWallet ? 'button' : 'a'"
       :href="useSdkWallet ? undefined : deepLink"
@@ -61,9 +62,6 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import iconTip from '../assets/iconTip.svg';
-import iconTipUser from '../assets/iconTipUser.svg';
-import iconTipped from '../assets/iconTipped.svg';
 import { tip, retip } from '../utils/aeternity';
 import Backend from '../utils/backend';
 import { EventBus } from '../utils/eventBus';
@@ -73,6 +71,7 @@ import Loading from './Loading.vue';
 import AeButton from './AeButton.vue';
 import AeAmountFiat from './AeAmountFiat.vue';
 import Modal from './Modal.vue';
+import IconTipRebranded from '../assets/IconTipRebranded.svg?icon-component';
 
 export default {
   components: {
@@ -81,6 +80,7 @@ export default {
     AeButton,
     AeAmountFiat,
     Modal,
+    IconTipRebranded,
   },
   props: {
     tip: { type: Object, default: null },
@@ -126,10 +126,6 @@ export default {
     },
     isValid() {
       return (this.tip || this.message.trim().length > 0) && this.inputValue > this.minTipAmount;
-    },
-    iconTip() {
-      if (this.userAddress) return iconTipUser;
-      return this.tipUrlStats.isTipped ? iconTipped : iconTip;
     },
     title() {
       if (this.userAddress) return this.$t('components.TipInput.tipUser');
@@ -235,6 +231,35 @@ export default {
         margin-left: 0.5rem;
       }
     }
+  }
+
+  .IconTipRebranded {
+    width: 20px;
+    height: 16px;
+    opacity: 0.5; // todo: match with design
+
+    & > .shape {
+      fill: #ffff;
+      fill-rule: evenodd;
+      clip-rule: evenodd;
+    }
+
+    &.tipped > .shape {
+      fill: $neo_blue_color;
+    }
+
+    /*
+    todo:
+    &.user {
+      smaller size
+      width: ?
+      height: ?
+    }
+    */
+  }
+
+  &:hover .IconTipRebranded {
+    opacity: 1;
   }
 }
 </style>
