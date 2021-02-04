@@ -501,12 +501,12 @@ export default {
 
         const height = await this.$store.dispatch('aeternity/getHeight');
         const closeHeight = height + 20;
-        const token = await this.$store.dispatch('aeternity/tokenSaleMethod',
+        const token = await this.$store.dispatch('wordbazaar/tokenSaleMethod',
           {
             contractAddress: this.saleContractAddress,
             method: 'get_token',
           });
-        const address = await this.$store.dispatch('aeternity/deployTokenVotingContract', {
+        const address = await this.$store.dispatch('wordbazaar/deployTokenVotingContract', {
           metadata,
           closeHeight,
           token,
@@ -514,7 +514,7 @@ export default {
 
         this.progressMessage = this.$t('views.WordDetail.CreateVote.ProgressMessage[1]');
 
-        await this.$store.dispatch('aeternity/tokenSaleMethod',
+        await this.$store.dispatch('wordbazaar/tokenSaleMethod',
           {
             contractAddress: this.saleContractAddress,
             method: 'add_vote',

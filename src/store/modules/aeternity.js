@@ -10,14 +10,9 @@ import TIPPING_INTERFACE_V3 from 'tipping-contract/Tipping_v3_Interface.aes';
 import tippingContractUtil from 'tipping-contract/util/tippingContractUtil';
 
 import FUNGIBLE_TOKEN_CONTRACT_INTERFACE from 'aeternity-fungible-token/FungibleTokenFullInterface.aes';
-import FUNGIBLE_TOKEN_CONTRACT from 'wordbazaar-contracts/FungibleTokenCustom.aes';
-import TOKEN_VOTING_CONTRACT from 'wordbazaar-contracts/TokenVoting.aes';
-import TOKEN_SALE_CONTRACT from 'wordbazaar-contracts/TokenSale.aes';
-import WORD_REGISTRY_CONTRACT from 'wordbazaar-contracts/WordRegistry.aes';
-import BONDING_CURVE from 'sophia-bonding-curve/BondCurveLinear.aes';
 
 import { BigNumber } from 'bignumber.js';
-import { IS_MOBILE_DEVICE, shiftDecimalPlaces } from '../../utils';
+import { IS_MOBILE_DEVICE } from '../../utils';
 
 export default {
   namespaced: true,
@@ -30,8 +25,6 @@ export default {
     contractV3: null,
     wordRegistryContract: null,
     fungibleTokenContracts: {},
-    tokenVotingContracts: {},
-    tokenSaleContracts: {},
     isTippingContractsInitialised: false,
   },
   mutations: {
@@ -53,15 +46,6 @@ export default {
     },
     setFungibleTokenContract(state, contractAddress, instance) {
       state.fungibleTokenContracts[contractAddress] = instance;
-    },
-    setTokenVotingContract(state, contractAddress, instance) {
-      state.tokenVotingContracts[contractAddress] = instance;
-    },
-    setTokenSaleContract(state, contractAddress, instance) {
-      state.tokenSaleContracts[contractAddress] = instance;
-    },
-    setWordRegistryContract(state, instance) {
-      state.wordRegistryContract = instance;
     },
   },
   actions: {
@@ -156,136 +140,6 @@ export default {
       }
 
       return fungibleTokenContracts[contractAddress];
-    },
-    async initWordRegistryContractIfNeeded({ commit, state: { sdk, wordRegistryContract } }) {
-      if (!wordRegistryContract) {
-        const contract = await sdk
-          .getContractInstance(WORD_REGISTRY_CONTRACT,
-            { contractAddress: process.env.VUE_APP_WORD_REGISTRY_ADDRESS });
-        commit('setWordRegistryContract', contract);
-        return contract;
-      }
-
-      return wordRegistryContract;
-    },
-    async initTokenVotingContractIfNeeded(
-      { commit, state: { sdk, tokenVotingContracts } },
-      contractAddress,
-    ) {
-      if (!tokenVotingContracts[contractAddress]) {
-        const contract = await sdk
-          .getContractInstance(TOKEN_VOTING_CONTRACT, { contractAddress });
-        commit('setTokenVotingContract', contractAddress, contract);
-        return contract;
-      }
-
-      return tokenVotingContracts[contractAddress];
-    },
-    async initTokenSaleContractIfNeeded(
-      { commit, state: { sdk, tokenSaleContracts } },
-      contractAddress,
-    ) {
-      if (!tokenSaleContracts[contractAddress]) {
-        const contract = await sdk.getContractInstance(TOKEN_SALE_CONTRACT, { contractAddress });
-        commit('setTokenSaleContract', contractAddress, contract);
-        return contract;
-      }
-
-      return tokenSaleContracts[contractAddress];
-    },
-    async deployBondingCurve({ state: { sdk } }, decimals) {
-      // alters bonding curve contract to change the dependency default 1 alpha to 18
-      // as we use 18 decimals and thus need to adjust the curve to match that
-      const BONDING_CURVE_DECIMALS = BONDING_CURVE.replace(
-        'function alpha() : Frac.frac = Frac.make_frac(1, 1)',
-        `function alpha() : Frac.frac = Frac.make_frac(1, ${shiftDecimalPlaces(1, decimals)})`,
-      );
-      const contract = await sdk.getContractInstance(BONDING_CURVE_DECIMALS);
-      await contract.methods.init();
-
-      return contract.deployInfo.address;
-    },
-    async deployTokenSaleContract(
-      { commit, state: { sdk } },
-      {
-        decimals,
-        timeout,
-        bondingCurveAddress,
-        description,
-      },
-    ) {
-      // alters token sale contract to change the dependency default 1 decimals to 18
-      // as we want that as default for use with wordbazaar
-      const TOKEN_SALE_CONTRACT_DECIMALS = TOKEN_SALE_CONTRACT.replace(
-        'let decimals = 1',
-        `let decimals = ${shiftDecimalPlaces(1, decimals)}`,
-      );
-
-      const contract = await sdk.getContractInstance(TOKEN_SALE_CONTRACT_DECIMALS);
-      await contract.methods.init(timeout, bondingCurveAddress, description);
-      commit('setTokenSaleContract', contract.deployInfo.address, contract);
-      return contract.deployInfo.address;
-    },
-    async deployFungibleTokenContract(
-      { commit, state: { sdk } },
-      {
-        name,
-        decimals,
-        symbol,
-        tokenSaleAddress,
-      },
-    ) {
-      const contract = await sdk.getContractInstance(FUNGIBLE_TOKEN_CONTRACT);
-      await contract.methods.init(name, decimals, symbol, tokenSaleAddress);
-      commit('setFungibleTokenContract', contract.deployInfo.address, contract);
-      return contract.deployInfo.address;
-    },
-    async deployTokenVotingContract(
-      { commit, state: { sdk } },
-      {
-        metadata,
-        closeHeight,
-        token,
-      },
-    ) {
-      const contract = await sdk.getContractInstance(TOKEN_VOTING_CONTRACT);
-      await contract.methods.init(metadata, closeHeight, token);
-      commit('setTokenVotingContract', contract.deployInfo.address, contract);
-      return contract.deployInfo.address;
-    },
-    async wordRegistryAddToken({ dispatch }, addTokenAddress) {
-      const contract = await dispatch('initWordRegistryContractIfNeeded');
-
-      const { decodedResult } = await contract.methods.add_token(addTokenAddress);
-      return decodedResult;
-    },
-    async tokenSaleMethod(
-      { dispatch },
-      {
-        contractAddress,
-        method,
-        args = [],
-        options = {},
-      },
-    ) {
-      const contract = await dispatch('initTokenSaleContractIfNeeded', contractAddress);
-
-      const { decodedResult } = await contract.methods[method](...args, options);
-      return decodedResult;
-    },
-    async tokenVotingMethod(
-      { dispatch },
-      {
-        contractAddress,
-        method,
-        args = [],
-        options = {},
-      },
-    ) {
-      const contract = await dispatch('initTokenVotingContractIfNeeded', contractAddress);
-
-      const { decodedResult } = await contract.methods[method](...args, options);
-      return decodedResult;
     },
     async tokenBalance({ dispatch }, { contractAddress, address }) {
       const contract = await dispatch('initFungibleTokenContractIfNeeded', contractAddress);

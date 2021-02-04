@@ -183,7 +183,7 @@ export default {
     ...mapState(['tokenInfo']),
   },
   async created() {
-    const metadata = await this.$store.dispatch('aeternity/tokenVotingMethod', {
+    const metadata = await this.$store.dispatch('wordbazaar/tokenVotingMethod', {
       contractAddress: this.vote.voteAddress, method: 'metadata',
     });
     this.description = metadata.description;
@@ -196,7 +196,7 @@ export default {
       this.loading = true;
       this.progressMessage = this.$t('components.VoteCard.RevokeVote');
       try {
-        await this.$store.dispatch('aeternity/tokenVotingMethod', {
+        await this.$store.dispatch('wordbazaar/tokenVotingMethod', {
           contractAddress: address, method: 'revoke_vote',
         });
         await Backend.invalidateWordSaleVoteStateCache(address);
@@ -218,7 +218,7 @@ export default {
       this.loading = true;
       this.progressMessage = this.$t('components.VoteCard.Payout');
       try {
-        await this.$store.dispatch('aeternity/tokenSaleMethod',
+        await this.$store.dispatch('wordbazaar/tokenSaleMethod',
           {
             contractAddress: this.contractAddress,
             method: 'apply_vote_subject',
@@ -243,7 +243,7 @@ export default {
       this.loading = true;
       this.progressMessage = this.$t('components.VoteCard.Withdraw');
       try {
-        await this.$store.dispatch('aeternity/tokenVotingMethod', {
+        await this.$store.dispatch('wordbazaar/tokenVotingMethod', {
           contractAddress: address, method: 'withdraw',
         });
         await Backend.invalidateWordSaleVoteStateCache(address);
@@ -275,7 +275,7 @@ export default {
         });
 
         this.progressMessage = this.$t('components.VoteCard.VoteOption[1]');
-        await this.$store.dispatch('aeternity/tokenVotingMethod', {
+        await this.$store.dispatch('wordbazaar/tokenVotingMethod', {
           contractAddress: address, method: 'vote', args: [option, shiftedAmount],
         });
 

@@ -8,6 +8,7 @@ import modals from './plugins/modals';
 // eslint-disable-next-line import/no-cycle
 import backend from './modules/backend';
 import aeternity from './modules/aeternity';
+import wordbazaar from './modules/wordbazaar';
 // eslint-disable-next-line import/no-cycle
 import Backend from '../utils/backend';
 import Middleware from '../utils/middleware';
@@ -73,6 +74,7 @@ export default new Vuex.Store({
   modules: {
     backend,
     aeternity,
+    wordbazaar,
   },
   plugins: [
     persistState(

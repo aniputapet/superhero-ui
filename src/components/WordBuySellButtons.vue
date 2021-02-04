@@ -240,7 +240,7 @@ export default {
 
       const amount = shiftDecimalPlaces(this.buyAmount || 0, 18).toFixed();
 
-      const value = await this.$store.dispatch('aeternity/tokenSaleMethod',
+      const value = await this.$store.dispatch('wordbazaar/tokenSaleMethod',
         {
           contractAddress: this.sale,
           method: 'calculate_buy_price',
@@ -255,7 +255,7 @@ export default {
       this.updatingValue = true;
 
       const amount = shiftDecimalPlaces(this.sellAmount || 0, 18).toFixed();
-      this.sellAeAmount = await this.$store.dispatch('aeternity/tokenSaleMethod',
+      this.sellAeAmount = await this.$store.dispatch('wordbazaar/tokenSaleMethod',
         {
           contractAddress: this.sale,
           method: 'calculate_sell_return',
@@ -269,7 +269,7 @@ export default {
 
       try {
         const { amount, value } = await this.buyValue();
-        await this.$store.dispatch('aeternity/tokenSaleMethod',
+        await this.$store.dispatch('wordbazaar/tokenSaleMethod',
           {
             contractAddress: this.sale,
             method: 'buy',
@@ -305,7 +305,7 @@ export default {
           forAccount: this.sale.replace('ct_', 'ak_'),
         }).catch(() => { throw new Error('Insufficient Account Balance'); });
         this.progressMessage = this.$t('components.WordBuySellButtons.Selling[1]');
-        await this.$store.dispatch('aeternity/tokenSaleMethod',
+        await this.$store.dispatch('wordbazaar/tokenSaleMethod',
           {
             contractAddress: this.sale,
             method: 'sell',

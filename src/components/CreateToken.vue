@@ -185,11 +185,11 @@ export default {
 
         this.step = 1;
 
-        const bondingCurveAddress = await this.$store.dispatch('aeternity/deployBondingCurve', decimals);
+        const bondingCurveAddress = await this.$store.dispatch('wordbazaar/deployBondingCurve', decimals);
 
         this.step = 2;
         const timeout = 20;
-        const tokenSaleAddress = await this.$store.dispatch('aeternity/deployTokenSaleContract',
+        const tokenSaleAddress = await this.$store.dispatch('wordbazaar/deployTokenSaleContract',
           {
             decimals,
             timeout,
@@ -198,7 +198,7 @@ export default {
           });
 
         this.step = 3;
-        const fungibleTokenAddress = await this.$store.dispatch('aeternity/deployFungibleTokenContract',
+        const fungibleTokenAddress = await this.$store.dispatch('wordbazaar/deployFungibleTokenContract',
           {
             name: this.name,
             decimals,
@@ -209,7 +209,7 @@ export default {
         EventBus.$emit('reloadData');
 
         this.step = 4;
-        await this.$store.dispatch('aeternity/tokenSaleMethod',
+        await this.$store.dispatch('wordbazaar/tokenSaleMethod',
           {
             contractAddress: tokenSaleAddress,
             method: 'set_token',
@@ -217,7 +217,7 @@ export default {
           });
 
         this.step = 5;
-        await this.$store.dispatch('aeternity/wordRegistryAddToken', tokenSaleAddress)
+        await this.$store.dispatch('wordbazaar/wordRegistryAddToken', tokenSaleAddress)
           .catch(() => { throw new Error(this.$t('components.CreateToken.ExistWarning')); });
         await Backend.invalidateWordRegistryCache();
 
