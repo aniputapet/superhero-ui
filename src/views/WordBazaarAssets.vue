@@ -120,8 +120,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.word-bazaar {
+.word-bazaar-assets {
   .tab-bar {
+    height: 40px;
     background-color: $buttons_background;
   }
 
