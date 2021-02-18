@@ -137,9 +137,6 @@ export default {
   },
   mounted() {
     this.reloadData();
-  },
-  created() {
-    this.reloadData();
     EventBus.$on('reloadData', () => {
       this.reloadData();
     });
