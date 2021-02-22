@@ -7,11 +7,12 @@
       <SearchInput
         v-if="showSearch"
         v-model="search"
+        hide-eraser
+        set-focused
         :placeholder="$t('views.WordBazaar.Placeholder')"
         class="desktop"
-        set-focused
         @input="reloadData"
-        @close="showSearch = false"
+        @close="closeSearch"
       />
       <IconSearch
         v-else
@@ -22,10 +23,11 @@
       v-if="showSearch"
       v-model="search"
       :placeholder="$t('views.WordBazaar.Placeholder')"
+      hide-eraser
       set-focused
       class="mobile"
       @input="reloadData"
-      @close="showSearch = false"
+      @close="closeSearch"
     />
 
     <WordListing
@@ -96,6 +98,7 @@ export default {
     this.reloadData();
   },
   created() {
+    this.loading = true;
     this.reloadData();
     EventBus.$on('reloadData', () => {
       this.reloadData();
@@ -113,6 +116,11 @@ export default {
       this.wordRegistryState = await Backend
         .getWordRegistry(this.ordering, this.direction, this.search);
       this.loading = false;
+    },
+    async closeSearch() {
+      this.showSearch = false;
+      this.search = '';
+      await this.reloadData();
     },
   },
   metaInfo() {
@@ -148,24 +156,35 @@ export default {
     }
 
     input {
-      padding: 0 0.5rem;
+      padding: 0 16px;
+      color: $secondary_color;
+
+      &::placeholder {
+        color: $standard_font_color;
+        opacity: 1;
+      }
+    }
+
+    .iconClose {
+      height: 24px;
     }
 
     svg {
       height: 0.75rem;
-      width: auto;
     }
   }
 
   .iconSearch {
-    height: 18px;
-    width: 18px;
-    margin-right: 20px;
+    height: 24px;
+    width: auto;
+    margin-right: 5px;
     cursor: pointer;
-    transition: color 0.3s ease-in-out;
+    transition: color 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0.7;
 
     &:hover {
       color: $custom_links_color;
+      opacity: 1;
     }
   }
 }
