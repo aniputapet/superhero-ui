@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <button @click="show">Show</button>
     <MobileNavigation v-if="!$route.meta.fullScreen" />
     <div class="not-bootstrap-row">
       <div
@@ -42,6 +43,7 @@ export default {
     ...mapState('aeternity', ['sdk']),
   },
   async created() {
+
     EventBus.$on('reloadData', () => {
       this.reloadData();
     });
@@ -55,7 +57,12 @@ export default {
 
     window.addEventListener('unhandledrejection', (code) => {
       if (code !== 200 && this.$route.name !== 'maintenance') {
-        this.$router.push({ name: 'maintenance' });
+        this.$store.dispatch('modals/open', {
+          name: 'error',
+          title: 'error.message',
+          body: 'Vote revoke failed!',
+          primaryButtonText: 'OK',
+        });
       }
     });
   },
@@ -114,6 +121,11 @@ export default {
         this.setAddress(address);
       }
       await this.reloadUserData();
+    },
+    show() {
+      this.$store.dispatch('modals/open', {
+        name: 'error',
+      });
     },
   },
   metaInfo: {

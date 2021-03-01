@@ -95,12 +95,12 @@ export const wrapTry = async (promise) => {
   try {
     return promise.then((res) => {
       if (!res || res.status !== 200) {
-        throw new Error(4000);
+        // throw new Error(4000);
       }
-      if (!res.ok) throw new Error(4000);
+      // if (!res.ok) throw new Error(4000);
       return res.json();
     });
   } catch (err) {
-    throw new Error(5000);
+    // throw new Error(5000);
   }
 };

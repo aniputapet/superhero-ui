@@ -2,7 +2,7 @@
 import store from '../store';
 import { wrapTry } from './index';
 
-const backendFetch = (path, ...args) => wrapTry(
+export const backendFetch = (path, ...args) => wrapTry(
   fetch(`${process.env.VUE_APP_BACKEND_URL}/${path}`, ...args).catch((err) => console.error(err), store),
 );
 
