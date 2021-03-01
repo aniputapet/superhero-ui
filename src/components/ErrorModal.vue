@@ -39,8 +39,8 @@ export default {
     };
   },
   methods: {
-    send() {
-      const body = {
+    async send() {
+      const report = {
         id: 0,
         appVersion: process.env.npm_package_version,
         browser: detect(),
@@ -50,12 +50,10 @@ export default {
         time: new Date(),
       };
 
-      console.log({ body });
-
-      // await backendFetch('errorreport', {
-      //   method: 'POST',
-      //   body,
-      // });
+      await backendFetch('errorreport', {
+        method: 'POST',
+        body: JSON.stringify(report),
+      });
     },
   },
 };
