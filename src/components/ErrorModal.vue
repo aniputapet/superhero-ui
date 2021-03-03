@@ -118,6 +118,7 @@ export default {
       float: right;
     }
   }
+
   .report-text {
     width: 100%;
     background: #171717;
@@ -128,8 +129,8 @@ export default {
     margin-bottom: 15px;
 
     &:focus {
-      background: #000000;
-      border: 1px solid #1161FE;
+      background: #000;
+      border: 1px solid #1161fe;
       outline: none;
     }
   }
