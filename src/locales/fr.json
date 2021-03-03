@@ -684,5 +684,7 @@
     "MenuLink": "Rencontrer",
     "Placeholder": "Nom de la pièce",
     "Start": "Commencer"
-  }
+  },
+  "reportBug": "Report a bug",
+  "sendBugReport": "Send a report"
 }

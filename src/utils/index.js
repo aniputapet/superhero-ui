@@ -91,16 +91,20 @@ export const blockToDate = (goalBlock, height) => {
   return new Date(diff * 180000 + Date.now());
 };
 
+// eslint-disable-next-line consistent-return
 export const wrapTry = async (promise) => {
   try {
     return promise.then((res) => {
-      if (!res || res.status !== 200) {
-        // throw new Error(4000);
+      if (!res) {
+        throw new Error('No response object');
       }
-      // if (!res.ok) throw new Error(4000);
+      if (res.status !== 200) {
+        throw new Error(`Error code ${res.status}`);
+      }
+      if (!res.ok) throw new Error(4000);
       return res.json();
     });
   } catch (err) {
-    // throw new Error(5000);
+    throw new Error(err);
   }
 };

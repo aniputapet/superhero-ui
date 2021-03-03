@@ -745,5 +745,7 @@
     "MenuLink": "Encontrar",
     "Placeholder": "Nombre de la habitación",
     "Start": "Empieza"
-  }
+  },
+  "reportBug": "Report a bug",
+  "sendBugReport": "Send a report"
 }

@@ -1,17 +1,20 @@
 <template>
   <div
     class="modal-mask"
+    @click="resolve"
   >
-    <div class="modal-wrapper">
-      <div class="success-modal">
-        <img :src="FailureIcon" >
-        <h1>Report an issue</h1>
-        <textarea v-model="report"></textarea>
+    <div class="modal-wrapper" @click.stop>
+      <div class="error-modal">
+        <h1>{{ $t('reportBug') }}</h1>
+        <textarea
+          v-model="report"
+          class="report-text"
+        />
         <button
-          @click="send"
           class="button"
+          @click="send"
         >
-          Send report
+          {{ $t('sendBugReport') }}
         </button>
       </div>
     </div>
@@ -30,6 +33,7 @@ export default {
     failure: { type: Boolean },
     hideIcon: { type: Boolean },
     resolve: { type: Function, required: true },
+    error: { type: [String, Number], default: 'Something went wrong' },
   },
   data() {
     return {
@@ -41,17 +45,19 @@ export default {
   methods: {
     async send() {
       const report = {
-        id: 0,
         appVersion: process.env.npm_package_version,
         browser: detect(),
-        error: 'string',
+        error: this.error,
         platform: 'web',
         description: this.report,
-        time: new Date(),
+        time: new Date().toISOString(),
       };
 
       await backendFetch('errorreport', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(report),
       });
     },
@@ -72,11 +78,11 @@ export default {
   display: table;
   background-color: rgba(0, 0, 0, 0.5);
 
-  .success-modal {
+  .error-modal {
     text-align: center;
     width: 25rem;
     margin: 0 auto;
-    padding: 2.5rem 2.5rem;
+    padding: 2.5rem 2.5rem 3.5rem 2.5rem;
     background-color: $actions_ribbon_background_color;
     border-radius: 0.25rem;
     border: 1px solid $card_border_color;
@@ -109,6 +115,22 @@ export default {
       justify-self: center;
       line-height: 1.125;
       padding: 0.65rem 1rem;
+      float: right;
+    }
+  }
+  .report-text {
+    width: 100%;
+    background: #171717;
+    border-radius: 6px;
+    border: 1px solid #000;
+    resize: none;
+    height: 150px;
+    margin-bottom: 15px;
+
+    &:focus {
+      background: #000000;
+      border: 1px solid #1161FE;
+      outline: none;
     }
   }
 }

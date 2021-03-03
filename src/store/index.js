@@ -32,7 +32,6 @@ export default new Vuex.Store({
     tokenPrices: {},
     wordRegistry: [],
     isHiddenContent: true,
-    isBackendLive: true,
     cookiesConsent: {},
   },
   mutations,

@@ -43,6 +43,14 @@ export default {
     ...mapState('aeternity', ['sdk']),
   },
   async created() {
+    window.addEventListener('unhandledrejection', (error) => {
+      if (error !== 200 && this.$route.name !== 'maintenance') {
+        this.$store.dispatch('modals/open', {
+          name: 'error',
+          error,
+        });
+      }
+    });
 
     EventBus.$on('reloadData', () => {
       this.reloadData();
@@ -54,17 +62,6 @@ export default {
       this.initWallet(),
       this.reloadData(),
     ]);
-
-    window.addEventListener('unhandledrejection', (code) => {
-      if (code !== 200 && this.$route.name !== 'maintenance') {
-        this.$store.dispatch('modals/open', {
-          name: 'error',
-          title: 'error.message',
-          body: 'Vote revoke failed!',
-          primaryButtonText: 'OK',
-        });
-      }
-    });
   },
   methods: {
     ...mapMutations([

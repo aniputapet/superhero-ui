@@ -575,5 +575,7 @@
     "MenuLink": "菜单",
     "Placeholder": "名称",
     "Start": "开始"
-  }
+  },
+  "reportBug": "Report a bug",
+  "sendBugReport": "Send a report"
 }

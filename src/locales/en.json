@@ -701,5 +701,7 @@
     "MenuLink": "Meet",
     "Placeholder": "Room name",
     "Start": "Start"
-  }
+  },
+  "reportBug": "Report a bug",
+  "sendBugReport": "Send a report"
 }
