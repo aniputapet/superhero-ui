@@ -127,6 +127,8 @@ export default {
     resize: none;
     height: 150px;
     margin-bottom: 15px;
+    padding: 5px;
+    color: #fff;
 
     &:focus {
       background: #000;
