@@ -114,11 +114,9 @@ export default {
           commit('setSdk', { instance });
           await dispatch('initTippingContractIfNeeded');
         }
-      } catch (err) {
-        commit('setBackendStatus', false, { root: true });
-        return;
+      } catch (error) {
+        return error;
       }
-      commit('setBackendStatus', true, { root: true });
     },
     async scanForWallets({ commit, state: { sdk } }) {
       const scannerConnection = await BrowserWindowMessageConnection({

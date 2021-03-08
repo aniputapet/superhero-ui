@@ -5,7 +5,12 @@
   >
     <div class="modal-wrapper" @click.stop>
       <div class="error-modal">
-        <h1>{{ $t('reportBug') }}</h1>
+        <h1>{{ error }}</h1>
+        <p>{{ $t('reportBug.Title') }}</p>
+        <p>{{ $t('reportBug.SubTitle') }}</p>
+        <p>{{ $t('reportBug.Description') }}</p>
+        <button>{{ $t('reportBug.ViewDetails') }}</button>
+        <h3>{{ $t('reportBug.DescriptionTitle') }}</h3>
         <textarea
           v-model="report"
           class="report-text"
@@ -14,7 +19,7 @@
           class="button"
           @click="send"
         >
-          {{ $t('sendBugReport') }}
+          {{ $t('reportBug.Send') }}
         </button>
       </div>
     </div>

@@ -576,6 +576,12 @@
     "Placeholder": "名称",
     "Start": "开始"
   },
-  "reportBug": "Report a bug",
-  "sendBugReport": "Send a report"
+  "reportBug": {
+    "Title": "Backend error",
+    "SubTitle": "Would you like to submit a bug report?",
+    "ViewDetails": "View full technical details to be submitted",
+    "Description": "We have encountered an error while loading this page. Be a fellow superhero and help us improve our service by sending us a bug report. Only technical details and no personal data will be submitted.",
+    "DescriptionTitle": "Bug description",
+    "Send": "Send a report"
+  }
 }
