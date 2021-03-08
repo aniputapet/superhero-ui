@@ -5,8 +5,7 @@
   >
     <div class="modal-wrapper" @click.stop>
       <div class="error-modal">
-        <h1>{{ error }}</h1>
-        <p>{{ $t('reportBug.Title') }}</p>
+        <h1>{{ $t('reportBug.Title') }}</h1>
         <p>{{ $t('reportBug.SubTitle') }}</p>
         <p>{{ $t('reportBug.Description') }}</p>
         <button>{{ $t('reportBug.ViewDetails') }}</button>
@@ -77,7 +76,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  display: flex;
+  display: table;
   background-color: rgba(0, 0, 0, 0.5);
 
   .error-modal {
@@ -126,7 +125,7 @@ export default {
     border-radius: 6px;
     border: 1px solid #000;
     resize: vertical;
-    height: 150px;
+    height: 50px;
     margin-bottom: 15px;
     padding: 5px;
     color: #fff;
