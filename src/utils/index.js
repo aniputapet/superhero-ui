@@ -95,16 +95,16 @@ export const blockToDate = (goalBlock, height) => {
 export const wrapTry = async (promise) => {
   try {
     return promise.then((res) => {
-      if (!res) {
-        throw new Error('No response object');
-      }
+      // if (!res) {
+      //   throw new Error('No response object');
+      // }
       if (res.status !== 200) {
         throw new Error(`Error code ${res.status}`);
       }
-      if (!res.ok) throw new Error(4000);
+      if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
       return res.json();
     });
   } catch (err) {
-    throw new Error(err);
+    return err;
   }
 };

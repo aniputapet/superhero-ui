@@ -1,6 +1,6 @@
 <template>
   <div
-    class="modal-mask"
+    class="error-modal"
     @click="resolve"
   >
     <div class="modal-wrapper" @click.stop>
@@ -24,20 +24,17 @@
 <script>
 import { detect } from 'detect-browser';
 
-import SuccessIcon from '../assets/verifiedUrl.svg';
 import FailureIcon from '../assets/iconError.svg';
 import { backendFetch } from '../utils/backend';
 
 export default {
   props: {
-    failure: { type: Boolean },
     hideIcon: { type: Boolean },
     resolve: { type: Function, required: true },
-    error: { type: [String, Number], default: 'Something went wrong' },
+    error: { type: String, required: true },
   },
   data() {
     return {
-      SuccessIcon,
       FailureIcon,
       report: '',
     };
@@ -48,7 +45,7 @@ export default {
         appVersion: process.env.npm_package_version,
         browser: detect(),
         error: this.error,
-        platform: 'web',
+        platform: 'superhero-ui',
         description: this.report,
         time: new Date().toISOString(),
       };
@@ -66,7 +63,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.modal-mask {
+.error-modal {
   vertical-align: middle;
   padding-top: 5rem;
   position: fixed;
@@ -75,7 +72,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  display: table;
+  display: flex;
   background-color: rgba(0, 0, 0, 0.5);
 
   .error-modal {
@@ -87,7 +84,6 @@ export default {
     border-radius: 0.25rem;
     border: 1px solid $card_border_color;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
-    word-break: break-word;
 
     @include smallest {
       width: 100%;
@@ -124,7 +120,7 @@ export default {
     background: #171717;
     border-radius: 6px;
     border: 1px solid #000;
-    resize: none;
+    resize: vertical;
     height: 150px;
     margin-bottom: 15px;
     padding: 5px;

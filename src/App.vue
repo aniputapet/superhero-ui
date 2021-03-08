@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <button @click="show">{{ $t('sendBugReport') }}</button>
     <MobileNavigation v-if="!$route.meta.fullScreen" />
     <div class="not-bootstrap-row">
       <div
@@ -44,12 +43,10 @@ export default {
   },
   async created() {
     window.addEventListener('unhandledrejection', (error) => {
-      if (error !== 200 && this.$route.name !== 'maintenance') {
-        this.$store.dispatch('modals/open', {
-          name: 'error',
-          error,
-        });
-      }
+      this.$store.dispatch('modals/open', {
+        name: 'error',
+        error,
+      });
     });
 
     EventBus.$on('reloadData', () => {
@@ -118,11 +115,6 @@ export default {
         this.setAddress(address);
       }
       await this.reloadUserData();
-    },
-    show() {
-      this.$store.dispatch('modals/open', {
-        name: 'error',
-      });
     },
   },
   metaInfo: {
