@@ -34,16 +34,29 @@
           :placeholder="$t('reportBug.Placeholder')"
         />
         <button
-          class="button"
+          class="button right"
           @click="send"
         >
           {{ $t('reportBug.Send') }}
         </button>
       </template>
       <template v-else>
-        <h1>{{ $t('reportBug.Success.Title') }}</h1>
-        <h2>{{ $t('reportBug.Success.SubTitle') }}</h2>
-        <p>{{ $t('reportBug.Success.Description') }}</p>
+        <iconOK />
+        <h1 class="successTitle">
+          {{ $t('reportBug.Success.Title') }}
+        </h1>
+        <h2 class="successSubTitle">
+          {{ $t('reportBug.Success.SubTitle') }}
+        </h2>
+        <p class="successDescription">
+          {{ $t('reportBug.Success.Description') }}
+        </p>
+        <button
+          class="button"
+          @click="resolve"
+        >
+          {{ $t('reportBug.Success.Return') }}
+        </button>
       </template>
     </div>
   </div>
@@ -55,6 +68,7 @@ import { detect } from 'detect-browser';
 import FailureIcon from '../assets/APIError.svg?icon-component';
 import IconClose from '../assets/iconCloseRebranded.svg?icon-component';
 import IconEye from '../assets/iconEye.svg?icon-component';
+import iconOK from '../assets/iconOK.svg?icon-component';
 import { backendFetch } from '../utils/backend';
 
 export default {
@@ -62,6 +76,7 @@ export default {
     FailureIcon,
     IconClose,
     IconEye,
+    iconOK,
   },
   props: {
     resolve: { type: Function, required: true },
@@ -85,13 +100,13 @@ export default {
         time: new Date().toISOString(),
       };
 
-      await backendFetch('errorreport', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(report),
-      });
+      // await backendFetch('errorreport', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(report),
+      // });
 
       this.step = 2;
     },
@@ -175,7 +190,10 @@ export default {
       justify-self: center;
       line-height: 1.125;
       padding: 0.65rem 1rem;
-      float: right;
+
+      .right {
+        float: right;
+      }
     }
   }
 
@@ -217,6 +235,32 @@ export default {
     top: 0.85em;
     right: 0.85em;
     cursor: pointer;
+  }
+
+  .iconOK {
+    margin-bottom: 8px;
+  }
+
+  .successTitle {
+    font-family: Roboto;
+    font-weight: bold;
+    font-size: 19px;
+    line-height: 22px;
+  }
+
+  .successSubTitle {
+    font-family: IBM Plex Sans;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 24px;
+  }
+
+  .successDescription {
+    font-family: IBM Plex Sans;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 24px;
+    margin-bottom: 40px;
   }
 }
 </style>
