@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <button @click="show">Test</button>
     <MobileNavigation v-if="!$route.meta.fullScreen" />
     <div class="not-bootstrap-row">
       <div
@@ -67,6 +68,12 @@ export default {
       'setGraylistedUrls', 'setTokenInfo', 'setWordRegistry', 'setVerifiedUrls',
     ]),
     ...mapMutations('aeternity', ['useSdkWallet']),
+    show() {
+      this.$store.dispatch('modals/open', {
+        name: 'error',
+        error: new Error('some'),
+      });
+    },
     async reloadData() {
       const [
         chainNames, oracleState, topics, verifiedUrls, graylistedUrls, tokenInfo, wordRegistry,

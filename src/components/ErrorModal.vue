@@ -3,16 +3,35 @@
     class="error-modal"
     @click="resolve"
   >
-    <div class="modal-wrapper" @click.stop>
-      <div class="error-modal">
+    <div class="modal-body" @click.stop>
+      <IconClose
+        class="close-modal"
+        @click="resolve"
+      />
+      <template v-if="step === 1">
+        <FailureIcon />
         <h1>{{ $t('reportBug.Title') }}</h1>
-        <p>{{ $t('reportBug.SubTitle') }}</p>
-        <p>{{ $t('reportBug.Description') }}</p>
-        <button>{{ $t('reportBug.ViewDetails') }}</button>
-        <h3>{{ $t('reportBug.DescriptionTitle') }}</h3>
+        <h2>{{ $t('reportBug.SubTitle') }}</h2>
+        <p class="description">
+          {{ $t('reportBug.Description') }}
+        </p>
+        <div
+          class="detailsButton"
+          @click="toggleDetails"
+        >
+          <IconEye />
+          {{ $t('reportBug.ViewDetails') }}
+        </div>
+        <p v-show="details">
+          {{ JSON.stringify(error) }}
+        </p>
+        <h2 class="reportTitle">
+          {{ $t('reportBug.DescriptionTitle') }}
+        </h2>
         <textarea
           v-model="report"
           class="report-text"
+          :placeholder="$t('reportBug.Placeholder')"
         />
         <button
           class="button"
@@ -20,7 +39,12 @@
         >
           {{ $t('reportBug.Send') }}
         </button>
-      </div>
+      </template>
+      <template v-else>
+        <h1>{{ $t('reportBug.Success.Title') }}</h1>
+        <h2>{{ $t('reportBug.Success.SubTitle') }}</h2>
+        <p>{{ $t('reportBug.Success.Description') }}</p>
+      </template>
     </div>
   </div>
 </template>
@@ -28,19 +52,26 @@
 <script>
 import { detect } from 'detect-browser';
 
-import FailureIcon from '../assets/iconError.svg';
+import FailureIcon from '../assets/APIError.svg?icon-component';
+import IconClose from '../assets/iconCloseRebranded.svg?icon-component';
+import IconEye from '../assets/iconEye.svg?icon-component';
 import { backendFetch } from '../utils/backend';
 
 export default {
+  components: {
+    FailureIcon,
+    IconClose,
+    IconEye,
+  },
   props: {
-    hideIcon: { type: Boolean },
     resolve: { type: Function, required: true },
-    error: { type: String, required: true },
+    error: { type: Error, required: true },
   },
   data() {
     return {
-      FailureIcon,
       report: '',
+      step: 1,
+      details: false,
     };
   },
   methods: {
@@ -61,6 +92,11 @@ export default {
         },
         body: JSON.stringify(report),
       });
+
+      this.step = 2;
+    },
+    toggleDetails() {
+      this.details = !this.details;
     },
   },
 };
@@ -79,15 +115,16 @@ export default {
   display: table;
   background-color: rgba(0, 0, 0, 0.5);
 
-  .error-modal {
+  .modal-body {
     text-align: center;
     width: 25rem;
     margin: 0 auto;
-    padding: 2.5rem 2.5rem 3.5rem 2.5rem;
-    background-color: $actions_ribbon_background_color;
+    padding: 2.5rem 1.6em 3.5rem 1.6em;
+    background: #131313;
     border-radius: 0.25rem;
     border: 1px solid $card_border_color;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
+    width: 448px;
 
     @include smallest {
       width: 100%;
@@ -103,6 +140,29 @@ export default {
       color: $standard_font_color;
       font-size: 1rem;
       font-weight: 500;
+      font-family: Roboto;
+    }
+
+    h2 {
+      font-family: IBM Plex Sans;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 24px;
+    }
+
+    .description {
+      font-size: 15px;
+      font-family: IBM Plex Sans;
+      line-height: 24px;
+      color: #BABAC0;
+    }
+
+    .reportTitle {
+      font-family: IBM Plex Sans;
+      font-size: 15px;
+      color: #787878;
+      text-align: left;
     }
 
     .button {
@@ -123,18 +183,40 @@ export default {
     width: 100%;
     background: #171717;
     border-radius: 6px;
-    border: 1px solid #000;
+    border: 1px solid #171717;
     resize: vertical;
-    height: 50px;
+    height: 40px;
     margin-bottom: 15px;
-    padding: 5px;
+    padding: 0.5em 0.9em;
     color: #fff;
+    font-size: 14px;
+    line-height: 24px;
 
     &:focus {
       background: #000;
       border: 1px solid #1161fe;
       outline: none;
+      height: 63px;
     }
+
+    &::placeholder {
+      font-family: IBM Plex Sans;
+      font-size: 14px;
+    }
+  }
+
+  .detailsButton {
+    font-family: IBM Plex Sans;
+    font-size: 15px;
+    cursor: pointer;
+    margin-bottom: 24px;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 0.85em;
+    right: 0.85em;
+    cursor: pointer;
   }
 }
 </style>
