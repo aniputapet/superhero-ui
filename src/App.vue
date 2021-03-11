@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <button @click="show">Test</button>
     <MobileNavigation v-if="!$route.meta.fullScreen" />
     <div class="not-bootstrap-row">
       <div
