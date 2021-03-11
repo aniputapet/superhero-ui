@@ -34,14 +34,20 @@
           :placeholder="$t('reportBug.Placeholder')"
         />
         <button
-          class="button right"
+          class="button cancel"
+          @click="resolve"
+        >
+          {{ $t('reportBug.Cancel') }}
+        </button>
+        <button
+          class="button"
           @click="send"
         >
           {{ $t('reportBug.Send') }}
         </button>
       </template>
       <template v-else>
-        <iconOK />
+        <IconOK />
         <h1 class="successTitle">
           {{ $t('reportBug.Success.Title') }}
         </h1>
@@ -68,7 +74,7 @@ import { detect } from 'detect-browser';
 import FailureIcon from '../assets/APIError.svg?icon-component';
 import IconClose from '../assets/iconCloseRebranded.svg?icon-component';
 import IconEye from '../assets/iconEye.svg?icon-component';
-import iconOK from '../assets/iconOK.svg?icon-component';
+import IconOK from '../assets/iconOK.svg?icon-component';
 import { backendFetch } from '../utils/backend';
 
 export default {
@@ -76,11 +82,11 @@ export default {
     FailureIcon,
     IconClose,
     IconEye,
-    iconOK,
+    IconOK,
   },
   props: {
     resolve: { type: Function, required: true },
-    error: { type: Error, required: true },
+    error: { type: [Error, PromiseRejectionEvent], required: true },
   },
   data() {
     return {
@@ -100,13 +106,13 @@ export default {
         time: new Date().toISOString(),
       };
 
-      // await backendFetch('errorreport', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(report),
-      // });
+      await backendFetch('errorreport', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(report),
+      });
 
       this.step = 2;
     },
@@ -159,7 +165,7 @@ export default {
     }
 
     h2 {
-      font-family: IBM Plex Sans;
+      color: #fff;
       font-style: normal;
       font-weight: 500;
       font-size: 15px;
@@ -168,13 +174,11 @@ export default {
 
     .description {
       font-size: 15px;
-      font-family: IBM Plex Sans;
       line-height: 24px;
       color: #BABAC0;
     }
 
     .reportTitle {
-      font-family: IBM Plex Sans;
       font-size: 15px;
       color: #787878;
       text-align: left;
@@ -190,9 +194,13 @@ export default {
       justify-self: center;
       line-height: 1.125;
       padding: 0.65rem 1rem;
+      font-size: 16px;
+      color: #fff;
 
-      .right {
-        float: right;
+      &.cancel {
+        background: #232323;
+        color: #babac0;
+        margin-right: 24px;
       }
     }
   }
@@ -218,13 +226,11 @@ export default {
     }
 
     &::placeholder {
-      font-family: IBM Plex Sans;
       font-size: 14px;
     }
   }
 
   .detailsButton {
-    font-family: IBM Plex Sans;
     font-size: 15px;
     cursor: pointer;
     margin-bottom: 24px;
@@ -249,14 +255,12 @@ export default {
   }
 
   .successSubTitle {
-    font-family: IBM Plex Sans;
     font-weight: bold;
     font-size: 15px;
     line-height: 24px;
   }
 
   .successDescription {
-    font-family: IBM Plex Sans;
     font-weight: normal;
     font-size: 15px;
     line-height: 24px;

@@ -752,7 +752,8 @@
     "ViewDetails": "View full technical details to be submitted",
     "Description": "We have encountered an error while loading this page. Be a fellow superhero and help us improve our service by sending us a bug report. Only technical details and no personal data will be submitted.",
     "DescriptionTitle": "Bug description",
-    "Send": "Send a report",
+    "Send": "Submit",
+    "Cancel": "Cancel",
     "Placeholder": "Describe the bug you encountered (optional)",
     "Success": {
       "Title": "Thank you!",

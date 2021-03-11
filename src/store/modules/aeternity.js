@@ -114,6 +114,7 @@ export default {
           commit('setSdk', { instance });
           await dispatch('initTippingContractIfNeeded');
         }
+        return true;
       } catch (error) {
         return error;
       }
