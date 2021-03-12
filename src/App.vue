@@ -42,13 +42,6 @@ export default {
     ...mapState('aeternity', ['sdk']),
   },
   async created() {
-    window.addEventListener('unhandledrejection', (error) => {
-      this.$store.dispatch('modals/open', {
-        name: 'error',
-        error,
-      });
-    });
-
     EventBus.$on('reloadData', () => {
       this.reloadData();
     });

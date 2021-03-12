@@ -5,6 +5,7 @@ import mutations from './mutations';
 import getters from './getters';
 import persistState from './plugins/persistState';
 import modals from './plugins/modals';
+import errorHandler from './plugins/errorHandler';
 // eslint-disable-next-line import/no-cycle
 import backend from './modules/backend';
 import aeternity from './modules/aeternity';
@@ -91,5 +92,6 @@ export default new Vuex.Store({
       }),
     ),
     modals,
+    errorHandler,
   ],
 });
