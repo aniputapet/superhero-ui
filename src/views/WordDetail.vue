@@ -798,7 +798,7 @@ export default {
     height: 65px;
     border-bottom: 1px solid $actions_ribbon_background_color;
     margin: 0;
-    z-index: 1;
+    z-index: 2;
 
     &.mobile {
       display: none;
@@ -831,10 +831,33 @@ export default {
       }
     }
 
+    .word-buy-sell-buttons {
+      .buy-modal {
+        .not-bootstrap-modal-content {
+          margin-left: -204px;
+
+          @include desktop {
+            margin-left: -200px;
+          }
+        }
+      }
+
+      .sell-modal {
+        .not-bootstrap-modal-content {
+          @include desktop {
+            margin-left: -120px;
+          }
+        }
+      }
+    }
+
     @include desktop {
       &.mobile {
         display: flex;
-        top: 48px;
+
+        @include mobile {
+          top: 48px;
+        }
       }
       &.desktop { display: none; }
     }
@@ -872,7 +895,7 @@ export default {
     font-size: 15px;
     position: sticky;
     top: 121px;
-    z-index: 1;
+    z-index: 2;
 
     .button-plain {
       .plus {

@@ -7,7 +7,10 @@
         </span>
         <span class="activity-bubble">
           <BubbleArrow />
-          <IconTokens class="activity-icon" />
+          <Component
+            :is="headerIcon"
+            class="activity-icon"
+          />
         </span>
       </template>
     </BackButtonRibbon>
@@ -24,7 +27,7 @@
         </FilterButton>
         <FilterButton :to="{ name: 'word-bazaar-create-token' }">
           <IconPlus />
-          {{ $t('views.WordBazaar.RibbonTabs.1.Text') }}
+          {{ $t('views.WordBazaar.RibbonTabs.1.TextMobile') }}
         </FilterButton>
         <FilterButton :to="{ name: 'word-bazaar-get-ae' }">
           <IconAe />
@@ -32,7 +35,7 @@
         </FilterButton>
         <FilterButton :to="{ name: 'word-bazaar-how-it-works' }">
           <IconHelp2 />
-          {{ $t('views.WordBazaar.RibbonTabs.3.Text') }}
+          {{ $t('views.WordBazaar.RibbonTabs.3.TextMobile') }}
         </FilterButton>
       </template>
     </ActivityRibbon>
@@ -90,6 +93,19 @@ export default {
     title() {
       return this.$route.matched[1].components.default.metaInfo.call(this).title;
     },
+    headerIcon() {
+      switch (this.$route.matched[1].name) {
+        case 'word-bazaar-assets':
+          return IconTokens;
+        case 'word-bazaar-create-token':
+          return IconPlus;
+        case 'word-bazaar-get-ae':
+          return IconAe;
+        case 'word-bazaar-how-it-works':
+          return IconHelp2;
+        default: return null;
+      }
+    },
   },
   metaInfo: {
     titleTemplate: '%s - WordBazaar',
@@ -141,7 +157,7 @@ export default {
     position: sticky;
     margin: 0;
     top: 56px;
-    z-index: 1;
+    z-index: 2;
 
     &.mobile {
       display: none;
