@@ -1,5 +1,5 @@
-const errors = [];
 export default ({ dispatch }) => {
+  const errors = [];
   const handlerBody = async (error) => {
     try {
       if (errors.lenght === 0) {
