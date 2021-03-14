@@ -60,12 +60,6 @@ export default {
       'setGraylistedUrls', 'setTokenInfo', 'setWordRegistry', 'setVerifiedUrls',
     ]),
     ...mapMutations('aeternity', ['useSdkWallet']),
-    show() {
-      this.$store.dispatch('modals/open', {
-        name: 'error',
-        error: new Error('some'),
-      });
-    },
     async reloadData() {
       const [
         chainNames, oracleState, topics, verifiedUrls, graylistedUrls, tokenInfo, wordRegistry,
