@@ -103,7 +103,8 @@ export default {
         error: this.error,
         platform: 'superhero-ui',
         description: this.report,
-        time: new Date().toISOString(),
+        // eslint-disable-next-line new-cap
+        time: new Date.now(),
       };
 
       await backendFetch('errorreport', {
