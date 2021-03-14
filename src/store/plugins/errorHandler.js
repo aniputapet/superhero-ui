@@ -1,25 +1,28 @@
 export default ({ dispatch }) => {
   const errors = [];
   const handlerBody = async (error) => {
-    // errors.push(error);
     try {
-      // if (errors.lenght === 0) {
+      if (errors.lenght === 0) {
+        console.log({ errors });
         dispatch('modals/open', {
           name: 'error',
           error,
         });
-     // }
+      }
+      errors.push(error);
     } catch {
-      // errors.pop();
+      errors.pop();
+      console.log({ errors });
     }
   };
 
   window.addEventListener('unhandledrejection', (error) => {
-    console.log({ error, stack: error.reason.stack });
-    handlerBody(error);
+    const combined = { message: error.reason, stack: error.reason.stack, info: error };
+    handlerBody(combined);
   });
 
   window.onerror = (message, source, line, col, error) => {
-    handlerBody(error);
+    const combined = { message, stack: `${source} ${line}:${col}`, info: error };
+    handlerBody(combined);
   };
 };
