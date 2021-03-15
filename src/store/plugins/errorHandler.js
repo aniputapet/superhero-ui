@@ -1,19 +1,9 @@
 export default ({ dispatch }) => {
-  const errors = [];
   const handlerBody = async (error) => {
-    try {
-      if (errors.lenght === 0) {
-        console.log({ errors });
-        dispatch('modals/open', {
-          name: 'error',
-          error,
-        });
-      }
-      errors.push(error);
-    } catch {
-      errors.pop();
-      console.log({ errors });
-    }
+    dispatch('modals/open', {
+      name: 'error',
+      error,
+    });
   };
 
   window.addEventListener('unhandledrejection', (error) => {
