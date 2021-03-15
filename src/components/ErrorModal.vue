@@ -216,7 +216,7 @@ export default {
 
     &:focus {
       background: #000;
-      border: 1px solid #1161fe;
+      border: 1px solid $secondary_color;
       outline: none;
       height: 63px;
     }
