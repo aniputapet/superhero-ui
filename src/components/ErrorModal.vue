@@ -161,7 +161,7 @@ export default {
       color: $standard_font_color;
       font-size: 1rem;
       font-weight: 500;
-      font-family: "Roboto-Regular";
+      font-family: "Roboto Regular ";
     }
 
     h2 {
