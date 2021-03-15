@@ -70,7 +70,6 @@
 
 <script>
 import { detect } from 'detect-browser';
-
 import FailureIcon from '../assets/APIError.svg?icon-component';
 import IconClose from '../assets/iconCloseRebranded.svg?icon-component';
 import IconEye from '../assets/iconEye.svg?icon-component';
