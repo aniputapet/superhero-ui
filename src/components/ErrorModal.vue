@@ -173,7 +173,7 @@ export default {
     .description {
       font-size: 15px;
       line-height: 24px;
-      color: #babac0;
+      color: $tip_note_color;
     }
 
     .reportTitle {
@@ -195,7 +195,7 @@ export default {
 
       &.cancel {
         background: #232323;
-        color: #babac0;
+        color: $tip_note_color;
         margin-right: 24px;
       }
     }
