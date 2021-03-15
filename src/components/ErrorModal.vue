@@ -139,7 +139,6 @@ export default {
 
   .modal-body {
     text-align: center;
-    width: 25rem;
     margin: 0 auto;
     padding: 2.5rem 1.6em 3.5rem 1.6em;
     background: #131313;
@@ -162,7 +161,7 @@ export default {
       color: $standard_font_color;
       font-size: 1rem;
       font-weight: 500;
-      font-family: Roboto;
+      font-family: "Roboto-Regular";
     }
 
     h2 {
@@ -176,7 +175,7 @@ export default {
     .description {
       font-size: 15px;
       line-height: 24px;
-      color: #BABAC0;
+      color: #babac0;
     }
 
     .reportTitle {
@@ -189,13 +188,11 @@ export default {
       background-color: $secondary_color;
       border: none;
       border-radius: 0.25rem;
-      color: $standard_font_color;
       font-size: 0.75rem;
       font-weight: 700;
       justify-self: center;
       line-height: 1.125;
       padding: 0.65rem 1rem;
-      font-size: 16px;
       color: #fff;
 
       &.cancel {
@@ -249,7 +246,7 @@ export default {
   }
 
   .successTitle {
-    font-family: Roboto;
+    font-family: "Roboto-Regular";
     font-weight: bold;
     font-size: 19px;
     line-height: 22px;
