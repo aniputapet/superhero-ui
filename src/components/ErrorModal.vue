@@ -12,16 +12,16 @@
         <FailureIcon />
         <h1>{{ $t('reportBug.Title') }}</h1>
         <h2>{{ $t('reportBug.SubTitle') }}</h2>
-        <ButtonPlain class="description">
+        <p class="description">
           {{ $t('reportBug.Description') }}
-        </ButtonPlain>
-        <div
+        </p>
+        <ButtonPlain
           class="detailsButton"
           @click="toggleDetails"
         >
           <IconEye />
           {{ $t('reportBug.ViewDetails') }}
-        </div>
+        </ButtonPlain>
         <p v-show="details">
           {{ JSON.stringify(error) }}
         </p>
@@ -155,7 +155,6 @@ export default {
       color: $standard_font_color;
       font-size: 1rem;
       font-weight: 500;
-      font-family: "Roboto Regular ";
     }
 
     h2 {
@@ -240,7 +239,6 @@ export default {
   }
 
   .successTitle {
-    font-family: "Roboto-Regular";
     font-weight: bold;
     font-size: 19px;
     line-height: 22px;
@@ -257,6 +255,10 @@ export default {
     font-size: 15px;
     line-height: 24px;
     margin-bottom: 40px;
+  }
+
+  .APIError, .iconOK {
+    height: 48px;
   }
 }
 </style>

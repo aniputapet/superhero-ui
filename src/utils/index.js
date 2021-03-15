@@ -92,12 +92,13 @@ export const blockToDate = (goalBlock, height) => {
 };
 
 export const wrapTry = async (promise) => {
+  // eslint-disable-next-line no-useless-catch
   try {
     return promise.then((res) => {
       if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
       return res.json();
     });
   } catch (err) {
-    return throw err;
+    throw err;
   }
 };
