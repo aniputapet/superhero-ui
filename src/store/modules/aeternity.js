@@ -84,39 +84,34 @@ export default {
       commit('setContracts', contracts);
     },
     async initSdk({ dispatch, commit }) {
-      try {
-        const options = {
-          nodes: [{ name: 'node', instance: await Node({ url: process.env.VUE_APP_NODE_URL }) }],
-          compilerUrl: process.env.VUE_APP_COMPILER_URL,
-        };
-        if (window.Cypress) {
-          const instance = await Universal({
-            ...options,
-            accounts: [
-              MemoryAccount({
-                keypair: { secretKey: Cypress.env('privateKey'), publicKey: Cypress.env('publicKey') },
-              }),
-            ],
-            address: Cypress.env('publicKey'),
-          });
-          const rpcClient = async () => Cypress.env('publicKey');
-          instance.rpcClient = { getCurrentAccount: async () => Cypress.env('publicKey') };
-          commit('setSdk', { instance, rpcClient });
-          await dispatch('initTippingContractIfNeeded');
-        } else {
-          const instance = await RpcAepp({
-            ...options,
-            name: 'Superhero',
-            onDisconnect() {
-              commit('resetState');
-            },
-          });
-          commit('setSdk', { instance });
-          await dispatch('initTippingContractIfNeeded');
-        }
-        return true;
-      } catch (error) {
-        return error;
+      const options = {
+        nodes: [{ name: 'node', instance: await Node({ url: process.env.VUE_APP_NODE_URL }) }],
+        compilerUrl: process.env.VUE_APP_COMPILER_URL,
+      };
+      if (window.Cypress) {
+        const instance = await Universal({
+          ...options,
+          accounts: [
+            MemoryAccount({
+              keypair: { secretKey: Cypress.env('privateKey'), publicKey: Cypress.env('publicKey') },
+            }),
+          ],
+          address: Cypress.env('publicKey'),
+        });
+        const rpcClient = async () => Cypress.env('publicKey');
+        instance.rpcClient = { getCurrentAccount: async () => Cypress.env('publicKey') };
+        commit('setSdk', { instance, rpcClient });
+        await dispatch('initTippingContractIfNeeded');
+      } else {
+        const instance = await RpcAepp({
+          ...options,
+          name: 'Superhero',
+          onDisconnect() {
+            commit('resetState');
+          },
+        });
+        commit('setSdk', { instance });
+        await dispatch('initTippingContractIfNeeded');
       }
     },
     async scanForWallets({ commit, state: { sdk } }) {

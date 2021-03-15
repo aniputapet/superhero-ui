@@ -12,9 +12,9 @@
         <FailureIcon />
         <h1>{{ $t('reportBug.Title') }}</h1>
         <h2>{{ $t('reportBug.SubTitle') }}</h2>
-        <p class="description">
+        <ButtonPlain class="description">
           {{ $t('reportBug.Description') }}
-        </p>
+        </ButtonPlain>
         <div
           class="detailsButton"
           @click="toggleDetails"
@@ -75,6 +75,7 @@ import FailureIcon from '../assets/APIError.svg?icon-component';
 import IconClose from '../assets/iconCloseRebranded.svg?icon-component';
 import IconEye from '../assets/iconEye.svg?icon-component';
 import IconOK from '../assets/iconOK.svg?icon-component';
+import ButtonPlain from './ButtonPlain.vue';
 import { backendFetch } from '../utils/backend';
 
 export default {
@@ -83,10 +84,11 @@ export default {
     IconClose,
     IconEye,
     IconOK,
+    ButtonPlain,
   },
   props: {
     resolve: { type: Function, required: true },
-    error: { type: [Error, PromiseRejectionEvent], required: true },
+    error: { type: [Object, Error, PromiseRejectionEvent.reason], required: true },
   },
   data() {
     return {
@@ -103,8 +105,7 @@ export default {
         error: this.error,
         platform: 'superhero-ui',
         description: this.report,
-        // eslint-disable-next-line new-cap
-        time: new Date.now(),
+        time: Date.now(),
       };
 
       await backendFetch('errorreport', {
