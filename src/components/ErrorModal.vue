@@ -70,13 +70,12 @@
 
 <script>
 import { detect } from 'detect-browser';
-
 import FailureIcon from '../assets/APIError.svg?icon-component';
 import IconClose from '../assets/iconCloseRebranded.svg?icon-component';
 import IconEye from '../assets/iconEye.svg?icon-component';
 import IconOK from '../assets/iconOK.svg?icon-component';
 import ButtonPlain from './ButtonPlain.vue';
-import { backendFetch } from '../utils/backend';
+import { issueReport } from '../utils/backend';
 
 export default {
   components: {
@@ -108,13 +107,7 @@ export default {
         time: Date.now(),
       };
 
-      await backendFetch('errorreport', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(report),
-      });
+      await issueReport(report);
 
       this.step = 2;
     },
@@ -176,7 +169,7 @@ export default {
     .description {
       font-size: 15px;
       line-height: 24px;
-      color: #babac0;
+      color: $tip_note_color;
     }
 
     .reportTitle {
@@ -198,7 +191,7 @@ export default {
 
       &.cancel {
         background: #232323;
-        color: #babac0;
+        color: $tip_note_color;
         margin-right: 24px;
       }
     }
@@ -219,7 +212,7 @@ export default {
 
     &:focus {
       background: #000;
-      border: 1px solid #1161fe;
+      border: 1px solid $secondary_color;
       outline: none;
       height: 63px;
     }

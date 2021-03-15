@@ -169,3 +169,13 @@ export default class Backend {
     headers: { 'Content-Type': 'application/json' },
   });
 }
+
+export const issueReport = (report) => {
+  backendFetch('errorreport', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(report),
+  });
+};
