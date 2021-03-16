@@ -16,12 +16,11 @@
         >
           {{ row }}
         </p>
-        <button
-          class="button"
+        <Button
           @click="resolve"
         >
           {{ primaryButtonText }}
-        </button>
+        </Button>
       </div>
     </div>
   </div>
@@ -30,8 +29,12 @@
 <script>
 import SuccessIcon from '../assets/verifiedUrl.svg';
 import FailureIcon from '../assets/iconError.svg';
+import Button from './Button.vue';
 
 export default {
+  components: {
+    Button,
+  },
   props: {
     title: { type: String, required: true },
     body: { type: [String, Array], required: true },
@@ -90,18 +93,6 @@ export default {
       color: $standard_font_color;
       font-size: 1rem;
       font-weight: 500;
-    }
-
-    .button {
-      background-color: $secondary_color;
-      border: none;
-      border-radius: 0.25rem;
-      color: $standard_font_color;
-      font-size: 0.75rem;
-      font-weight: 700;
-      justify-self: center;
-      line-height: 1.125;
-      padding: 0.65rem 1rem;
     }
   }
 }

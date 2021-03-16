@@ -95,6 +95,7 @@ export const wrapTry = async (promise) => {
   // eslint-disable-next-line no-useless-catch
   try {
     return promise.then((res) => {
+      if (!res) throw new Error('Responce object is undefined');
       if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
       return res.json();
     });

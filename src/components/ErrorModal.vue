@@ -33,18 +33,17 @@
           class="report-text"
           :placeholder="$t('reportBug.Placeholder')"
         />
-        <button
-          class="button cancel"
+        <Button
+          class="cancel"
           @click="resolve"
         >
           {{ $t('reportBug.Cancel') }}
-        </button>
-        <button
-          class="button"
+        </Button>
+        <Button
           @click="send"
         >
           {{ $t('reportBug.Send') }}
-        </button>
+        </Button>
       </template>
       <template v-else>
         <IconOK />
@@ -57,12 +56,11 @@
         <p class="successDescription">
           {{ $t('reportBug.Success.Description') }}
         </p>
-        <button
-          class="button"
+        <Button
           @click="resolve"
         >
           {{ $t('reportBug.Success.Return') }}
-        </button>
+        </Button>
       </template>
     </div>
   </div>
@@ -76,6 +74,7 @@ import IconEye from '../assets/iconEye.svg?icon-component';
 import IconOK from '../assets/iconOK.svg?icon-component';
 import ButtonPlain from './ButtonPlain.vue';
 import { issueReport } from '../utils/backend';
+import Button from './Button.vue';
 
 export default {
   components: {
@@ -84,6 +83,7 @@ export default {
     IconEye,
     IconOK,
     ButtonPlain,
+    Button,
   },
   props: {
     resolve: { type: Function, required: true },
@@ -120,26 +120,28 @@ export default {
 
 <style lang="scss" scoped>
 .error-modal {
-  vertical-align: middle;
   padding-top: 5rem;
   position: fixed;
+  justify-content: center;
+  align-items: center;
   z-index: 9998;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  display: table;
+  display: flex;
   background-color: rgba(0, 0, 0, 0.5);
 
   .modal-body {
     text-align: center;
     margin: 0 auto;
-    padding: 2.5rem 1.6em 3.5rem 1.6em;
+    padding: 2.5rem 1.6em 2.5rem 1.6em;
     background: #131313;
     border-radius: 0.25rem;
     border: 1px solid $card_border_color;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
-    width: 448px;
+    height: auto;
+    max-width: 448px;
 
     @include smallest {
       width: 100%;
@@ -257,7 +259,8 @@ export default {
     margin-bottom: 40px;
   }
 
-  .APIError, .iconOK {
+  .APIError,
+  .iconOK {
     height: 48px;
   }
 }
