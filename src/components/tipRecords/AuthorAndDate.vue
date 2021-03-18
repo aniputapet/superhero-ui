@@ -17,7 +17,7 @@
         @mouseover="hoverDebounced = true"
         @mouseleave="hoverDebounced = false"
       >
-        <Avatar :address="address" />
+        <Avatar :address="address" :chain-name="chainName" />
         <Transition name="fade">
           <UserCard
             v-if="hoverDebounced"
@@ -27,7 +27,7 @@
       </div>
       <div class="author-name">
         <span class="chain-name">
-          {{ name ? name : $t('FellowSuperhero') }}
+          {{ chainName ? chainName : $t('FellowSuperhero') }}
         </span>
         <span class="address">
           {{ address }}
@@ -43,7 +43,6 @@
 
 <script>
 import { debounce } from 'lodash-es';
-import { mapState } from 'vuex';
 import FormatDate from './FormatDate.vue';
 import Avatar from '../Avatar.vue';
 import UserCard from '../UserCard.vue';
@@ -56,6 +55,7 @@ export default {
   },
   props: {
     address: { type: String, required: true },
+    chainName: { type: String, required: false, default: null },
   },
   data: () => ({ hover: false }),
   computed: {
@@ -67,11 +67,6 @@ export default {
         this.hover = hover;
       }, 500),
     },
-    ...mapState({
-      name({ chainNames }) {
-        return chainNames[this.address] || '';
-      },
-    }),
   },
 };
 </script>

@@ -20,23 +20,23 @@ jdenticon.config = IDENTICON_CONFIG;
 export default {
   props: {
     address: { type: String, default: '' },
+    chainName: { type: String, required: false, default: null },
     showIdenticonOnly: { type: Boolean },
   },
   data: () => ({
     error: false,
   }),
-  computed: mapState({
-    profileIdenticonUrl({ chainNames }) {
-      const name = chainNames[this.address];
-      return name
-        ? new Avatars(sprites, AVATAR_CONFIG).create(name)
+  computed: {
+    profileIdenticonUrl() {
+      return this.chainName
+        ? new Avatars(sprites, AVATAR_CONFIG).create(this.chainName)
         : `data:image/svg+xml;base64,${btoa(jdenticon.toSvg(this.address, 32))}`;
     },
     profileImageUrl({ address, profile }) {
       const key = address === this.address && profile?.signature?.slice(0, 5);
       return `${Backend.getProfileImageUrl(this.address)}${key ? `?cacheBust=${key}` : ''}`;
     },
-  }),
+  },
   watch: {
     profileImageUrl() {
       this.error = false;
