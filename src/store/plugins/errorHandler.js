@@ -7,9 +7,8 @@ export default ({ dispatch }) => {
       invoke = false;
       await dispatch('modals/open', {
         name: 'error',
-        error: errors[0],
+        error: errors.shift(),
       });
-      errors.shift();
       invoke = true;
       handlerBody();
     }
