@@ -8,7 +8,7 @@
         class="close-modal"
         @click="resolve"
       />
-      <template v-if="step === 1">
+      <template v-if="!isSent">
         <FailureIcon />
         <h1>{{ $t('reportBug.Title') }}</h1>
         <h2>{{ $t('reportBug.SubTitle') }}</h2>
@@ -30,7 +30,7 @@
         </h2>
         <textarea
           v-model="report"
-          class="report-text"
+          class="reportText"
           :placeholder="$t('reportBug.Placeholder')"
         />
         <Button
@@ -87,12 +87,12 @@ export default {
   },
   props: {
     resolve: { type: Function, required: true },
-    error: { type: [Object, Error, PromiseRejectionEvent.reason], required: true },
+    error: { type: [Object, Error], required: true },
   },
   data() {
     return {
       report: '',
-      step: 1,
+      isSent: false,
       details: false,
     };
   },
@@ -109,7 +109,7 @@ export default {
 
       await issueReport(report);
 
-      this.step = 2;
+      this.isSent = true;
     },
     toggleDetails() {
       this.details = !this.details;
@@ -175,7 +175,7 @@ export default {
 
     .reportTitle {
       font-size: 15px;
-      color: #787878;
+      color: $light_font_color;
       text-align: left;
     }
 
@@ -198,7 +198,7 @@ export default {
     }
   }
 
-  .report-text {
+  .reportText {
     width: 100%;
     background: #171717;
     border-radius: 6px;
