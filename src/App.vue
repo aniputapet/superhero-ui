@@ -66,7 +66,7 @@ export default {
       ] = await Promise.all([
         Backend.getCacheChainNames(),
         Backend.getOracleCache(),
-        Backend.getTopicsCache(),
+        Backend.getTopics(),
         Backend.getVerifiedUrls(),
         Backend.getGrayListedUrls(),
         Backend.getTokenInfo(),
