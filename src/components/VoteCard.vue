@@ -198,7 +198,7 @@ export default {
       this.progressMessage = this.$t('components.VoteCard.RevokeVote');
       try {
         await this.$store.dispatch('aeternity/tokenVotingMethod', {
-          contractAddress: address, method: 'revoke_vote',
+          contractAddress: address, method: 'revoke_vote', withDeepLink: true,
         });
         await Backend.invalidateWordSaleVoteStateCache(address);
       } catch (error) {
@@ -245,7 +245,7 @@ export default {
       this.progressMessage = this.$t('components.VoteCard.Withdraw');
       try {
         await this.$store.dispatch('aeternity/tokenVotingMethod', {
-          contractAddress: address, method: 'withdraw',
+          contractAddress: address, method: 'withdraw', withDeepLink: true,
         });
         await Backend.invalidateWordSaleVoteStateCache(address);
       } catch (error) {

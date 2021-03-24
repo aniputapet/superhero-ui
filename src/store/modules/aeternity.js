@@ -17,7 +17,7 @@ import WORD_REGISTRY_CONTRACT from 'wordbazaar-contracts/WordRegistry.aes';
 import BONDING_CURVE from 'sophia-bonding-curve/BondCurveLinear.aes';
 
 import { BigNumber } from 'bignumber.js';
-import { IS_MOBILE_DEVICE, shiftDecimalPlaces } from '../../utils';
+import { IS_MOBILE_DEVICE, shiftDecimalPlaces, createDeepLinkUrl } from '../../utils';
 
 export default {
   namespaced: true,
@@ -261,32 +261,46 @@ export default {
       return decodedResult;
     },
     async tokenSaleMethod(
-      { dispatch },
+      { dispatch, state: { useSdkWallet } },
       {
         contractAddress,
         method,
         args = [],
         options = {},
+        withDeepLink = false,
       },
     ) {
       const contract = await dispatch('initTokenSaleContractIfNeeded', contractAddress);
 
-      const { decodedResult } = await contract.methods[method](...args, options);
-      return decodedResult;
+      if (useSdkWallet || !withDeepLink) {
+        const { decodedResult } = await contract.methods[method](...args, options);
+        return decodedResult;
+      }
+
+      const { tx } = await contract.methods[method].get(...args, options);
+      window.location = createDeepLinkUrl({ type: 'sign-transaction', encodedTx: tx.encodedTx });
+      return null;
     },
     async tokenVotingMethod(
-      { dispatch },
+      { dispatch, state: { useSdkWallet } },
       {
         contractAddress,
         method,
         args = [],
         options = {},
+        withDeepLink = false,
       },
     ) {
       const contract = await dispatch('initTokenVotingContractIfNeeded', contractAddress);
 
-      const { decodedResult } = await contract.methods[method](...args, options);
-      return decodedResult;
+      if (useSdkWallet || !withDeepLink) {
+        const { decodedResult } = await contract.methods[method](...args, options);
+        return decodedResult;
+      }
+
+      const { tx } = await contract.methods[method].get(...args, options);
+      window.location = createDeepLinkUrl({ type: 'sign-transaction', encodedTx: tx.encodedTx });
+      return null;
     },
     async tokenBalance({ dispatch }, { contractAddress, address }) {
       const contract = await dispatch('initFungibleTokenContractIfNeeded', contractAddress);

@@ -275,6 +275,7 @@ export default {
             method: 'buy',
             args: [amount],
             options: { amount: value },
+            withDeepLink: true,
           });
 
         await Backend.invalidateTokenCache(this.tokenAddress);
