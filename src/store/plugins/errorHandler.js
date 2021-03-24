@@ -15,18 +15,17 @@ export default ({ dispatch }) => {
   };
 
   const handlerBodyLoop = async (error) => {
-    if (error) errors.unshift(error);
-
-    for (let i = 0; i < errors.length; i++) {
-      if (invoke && errors.length !== 0) {
-        invoke = false;
-        await dispatch('modals/open', {
-          name: 'error',
-          error: errors.shift(),
-        });
-        invoke = true;
-      }
+    errors.unshift(error);
+    if (!invoke) return;
+    invoke = false;
+    while (errors.length) {
+      // eslint-disable-next-line no-await-in-loop
+      await dispatch('modals/open', {
+        name: 'error',
+        error: errors.shift(),
+      });
     }
+    invoke = true;
   };
 
   window.addEventListener('unhandledrejection', (error) => {
