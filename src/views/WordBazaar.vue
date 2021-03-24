@@ -1,7 +1,7 @@
 <template>
   <div class="word-bazaar">
     <BackButtonRibbon hide-back>
-      <template v-slot:title>
+      <template #title>
         {{ title }}
       </template>
     </BackButtonRibbon>

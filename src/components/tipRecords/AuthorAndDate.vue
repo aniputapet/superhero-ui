@@ -17,7 +17,10 @@
         @mouseover="hoverDebounced = true"
         @mouseleave="hoverDebounced = false"
       >
-        <Avatar :address="address" :chain-name="chainName" />
+        <Avatar
+          :address="address"
+          :chain-name="chainName"
+        />
         <Transition name="fade">
           <UserCard
             v-if="hoverDebounced"
