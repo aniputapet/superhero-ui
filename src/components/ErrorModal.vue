@@ -1,11 +1,11 @@
 <template>
   <div
-    class="error-modal"
+    class="errorModal"
     @click="resolve"
   >
-    <div class="modal-body" @click.stop>
+    <div class="modalBody" @click.stop>
       <IconClose
-        class="close-modal"
+        class="closeModal"
         @click="resolve"
       />
       <template v-if="!isSent">
@@ -73,7 +73,7 @@ import IconClose from '../assets/iconCloseRebranded.svg?icon-component';
 import IconEye from '../assets/iconEye.svg?icon-component';
 import IconOK from '../assets/iconOK.svg?icon-component';
 import ButtonPlain from './ButtonPlain.vue';
-import { issueReport } from '../utils/backend';
+import Backend from '../utils/backend';
 import Button from './Button.vue';
 
 export default {
@@ -107,7 +107,7 @@ export default {
         time: Date.now(),
       };
 
-      await issueReport(report);
+      await Backend.issueReport(report);
 
       this.isSent = true;
     },
@@ -119,7 +119,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.error-modal {
+.errorModal {
   padding-top: 5rem;
   position: fixed;
   justify-content: center;
@@ -132,7 +132,7 @@ export default {
   display: flex;
   background-color: rgba(0, 0, 0, 0.5);
 
-  .modal-body {
+  .modalBody {
     text-align: center;
     margin: 0 auto;
     padding: 2.5rem 1.6em 2.5rem 1.6em;
@@ -179,22 +179,10 @@ export default {
       text-align: left;
     }
 
-    .button {
-      background-color: $secondary_color;
-      border: none;
-      border-radius: 0.25rem;
-      font-size: 0.75rem;
-      font-weight: 700;
-      justify-self: center;
-      line-height: 1.125;
-      padding: 0.65rem 1rem;
-      color: #fff;
-
-      &.cancel {
-        background: #232323;
-        color: $tip_note_color;
-        margin-right: 24px;
-      }
+    .button.cancel {
+      background: #232323;
+      color: $tip_note_color;
+      margin-right: 24px;
     }
   }
 
@@ -229,7 +217,7 @@ export default {
     margin-bottom: 24px;
   }
 
-  .close-modal {
+  .closeModal {
     position: absolute;
     top: 0.85em;
     right: 0.85em;
@@ -262,6 +250,10 @@ export default {
   .APIError,
   .iconOK {
     height: 48px;
+  }
+
+  .iconEye {
+    width: 20px;
   }
 }
 </style>
