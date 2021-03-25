@@ -255,5 +255,10 @@ export default {
   .iconEye {
     width: 20px;
   }
+
+  .iconCloseRebranded {
+    width: 14px;
+    height: 14px;
+  }
 }
 </style>
