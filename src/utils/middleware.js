@@ -1,7 +1,7 @@
 import { wrapTry } from './index';
 
 const backendFetch = (path, ...args) => wrapTry(
-  fetch(`${process.env.VUE_APP_MIDDLEWARE_URL}/${path}`, ...args).catch((err) => console.error(err)),
+  fetch(`${process.env.VUE_APP_MIDDLEWARE_URL}/${path}`, ...args),
 );
 
 export default class Middleware {
