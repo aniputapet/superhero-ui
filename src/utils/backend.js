@@ -1,9 +1,7 @@
-// eslint-disable-next-line import/no-cycle
-import store from '../store';
 import { wrapTry } from './index';
 
 const backendFetch = (path, ...args) => wrapTry(
-  fetch(`${process.env.VUE_APP_BACKEND_URL}/${path}`, ...args).catch((err) => console.error(err), store),
+  fetch(`${process.env.VUE_APP_BACKEND_URL}/${path}`, ...args),
 );
 
 const backendFetchNoTimeout = (path, ...args) => fetch(`${process.env.VUE_APP_BACKEND_URL}/${path}`, ...args)
