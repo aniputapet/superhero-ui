@@ -113,11 +113,7 @@ export default class Backend {
     if (ordering) queryParams.set('ordering', ordering);
     if (direction) queryParams.set('direction', direction);
     if (search) queryParams.set('search', search);
-    return backendFetch(`tokenCache/wordRegistry?${queryParams.toString()}`)
-      .catch((err) => {
-        console.log(`tokenCache/wordRegistry response with: ${err}`);
-        return [];
-      });
+    return backendFetch(`tokenCache/wordRegistry?${queryParams.toString()}`);
   }
 
   static getWordSaleVotesDetails = async (address) => backendFetch(`tokenCache/wordSaleVotesDetails/${address}`);

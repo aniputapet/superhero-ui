@@ -70,7 +70,11 @@ export default {
         Backend.getVerifiedUrls(),
         Backend.getGrayListedUrls(),
         Backend.getTokenInfo(),
-        Backend.getWordRegistry(),
+        Backend.getWordRegistry()
+          .catch((err) => {
+            console.log(`tokenCache/wordRegistry response with: ${err}`);
+            return [];
+          }),
         this.$store.dispatch('backend/reloadStats'),
         this.$store.dispatch('backend/reloadPrices'),
         this.reloadUserData(),

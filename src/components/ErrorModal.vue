@@ -1,11 +1,11 @@
 <template>
   <div
-    class="errorModal"
+    class="error-modal"
     @click="resolve"
   >
-    <div class="modalBody" @click.stop>
+    <div class="modal-body" @click.stop>
       <IconClose
-        class="closeModal"
+        class="close-modal"
         @click="resolve"
       />
       <template v-if="!isSent">
@@ -16,7 +16,7 @@
           {{ $t('reportBug.Description') }}
         </p>
         <ButtonPlain
-          class="detailsButton"
+          class="details-button"
           @click="toggleDetails"
         >
           <IconEye />
@@ -25,12 +25,12 @@
         <p v-show="details">
           {{ JSON.stringify(error) }}
         </p>
-        <h2 class="reportTitle">
+        <h2 class="report-title">
           {{ $t('reportBug.DescriptionTitle') }}
         </h2>
         <textarea
           v-model="report"
-          class="reportText"
+          class="report-text"
           :placeholder="$t('reportBug.Placeholder')"
         />
         <Button
@@ -47,13 +47,13 @@
       </template>
       <template v-else>
         <IconOK />
-        <h1 class="successTitle">
+        <h1 class="success-title">
           {{ $t('reportBug.Success.Title') }}
         </h1>
-        <h2 class="successSubTitle">
+        <h2 class="success-subtitle">
           {{ $t('reportBug.Success.SubTitle') }}
         </h2>
-        <p class="successDescription">
+        <p class="success-description">
           {{ $t('reportBug.Success.Description') }}
         </p>
         <Button
@@ -119,7 +119,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.errorModal {
+.error-modal {
   padding-top: 5rem;
   position: fixed;
   justify-content: center;
@@ -132,7 +132,7 @@ export default {
   display: flex;
   background-color: rgba(0, 0, 0, 0.5);
 
-  .modalBody {
+  .modal-body {
     text-align: center;
     margin: 0 auto;
     padding: 2.5rem 1.6em 2.5rem 1.6em;
@@ -173,7 +173,7 @@ export default {
       color: $tip_note_color;
     }
 
-    .reportTitle {
+    .report-title {
       font-size: 15px;
       color: $light_font_color;
       text-align: left;
@@ -186,7 +186,7 @@ export default {
     }
   }
 
-  .reportText {
+  .report-text {
     width: 100%;
     background: #171717;
     border-radius: 6px;
@@ -211,13 +211,13 @@ export default {
     }
   }
 
-  .detailsButton {
+  .details-button {
     font-size: 15px;
     cursor: pointer;
     margin-bottom: 24px;
   }
 
-  .closeModal {
+  .close-modal {
     position: absolute;
     top: 0.85em;
     right: 0.85em;
@@ -228,19 +228,19 @@ export default {
     margin-bottom: 8px;
   }
 
-  .successTitle {
+  .success-title {
     font-weight: bold;
     font-size: 19px;
     line-height: 22px;
   }
 
-  .successSubTitle {
+  .success-subtitle {
     font-weight: bold;
     font-size: 15px;
     line-height: 24px;
   }
 
-  .successDescription {
+  .success-description {
     font-weight: normal;
     font-size: 15px;
     line-height: 24px;
